@@ -25,8 +25,8 @@ const userSchema = (sequelize, DataTypes) => {
   // Basic AUTH: Validating strings (username, password) 
   model.authenticateBasic = async function (username, password) {
     console.log('authenticateBasic password:',password);
-    let user = await this.findOne({ where: { username }, logging: (sql, queryObject) => {
-      console.log(sql) //queryObject
+    let user = await this.findOne({ where: { username: username }, logging: (sql, queryObject) => {
+      console.log(queryObject) //queryObject
     }, });
 
     let valid = await bcrypt.compare(password, user.password)
@@ -40,9 +40,12 @@ const userSchema = (sequelize, DataTypes) => {
   // Bearer AUTH: Validating a token
   model.authenticateToken = async function (token) {
     try {
-      const parsedToken = jwt.verify(token, process.env.SECRET);
-      const user = this.findOne({ username: parsedToken.username })
-      if (user) { return user; }
+      const parsedToken = jwt.verify(token, JWT_SECRET);
+      //console.log('parsedToken: ',parsedToken.username);
+      const user = await this.findOne({ where: { username: parsedToken.username }});
+      if (user) { 
+        return user; 
+      }
       throw new Error("User Not Found");
     } catch (e) {
       throw new Error(e.message)

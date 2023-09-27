@@ -50,7 +50,7 @@ describe('Auth Middleware', () => {
 
       const user = { username: 'admin' };
       const token = jwt.sign(user, process.env.SECRET);
-
+      console.log(token);
       req.headers = {
         authorization: `Bearer ${token}`,
       };

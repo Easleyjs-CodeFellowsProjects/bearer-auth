@@ -34,6 +34,8 @@ describe('Auth Middleware', () => {
 
   describe('user authentication', () => {
     it('fails a login for a user (admin) with the incorrect basic credentials', () => {
+      //admin-basic password
+      //username:password
       const basicAuthString = base64.encode('username:password');
 
       // Change the request to match this test case
@@ -49,7 +51,7 @@ describe('Auth Middleware', () => {
 
     });
 
-    xit('logs in an admin user with the right credentials', () => {
+    it('logs in an admin user with the right credentials', () => {
       let basicAuthString = base64.encode(`${userInfo.admin.username}:${userInfo.admin.password}`);
 
       // Change the request to match this test case

@@ -25,7 +25,6 @@ async function handleSignin(req, res, next) {
     };
     res.status(200).json(user);
   } catch (e) {
-    console.log("I'm an error in the handler");
     console.error(e);
     next(e);
   }

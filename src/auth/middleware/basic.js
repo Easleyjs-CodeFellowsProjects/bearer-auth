@@ -12,7 +12,7 @@ async function basicAuth (req, res, next) {
   let encodedString = req.headers.authorization.split(' ')[1];
   let decodedString = base64.decode(encodedString);
   let [username, pass] = decodedString.split(':');
-  console.log('basic.js pass:',pass);
+
   try {
     let validUser = await users.authenticateBasic(username, pass)
     //console.log(validUser);
@@ -25,7 +25,7 @@ async function basicAuth (req, res, next) {
     }
   } catch (e) {
     console.error(e);
-    next('Error logging in');
+    res.status(403).send('Error Logging In')
   }
 
 }
