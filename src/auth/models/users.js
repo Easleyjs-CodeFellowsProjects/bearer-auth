@@ -5,6 +5,11 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = "TEST_SECRET";
 
 const userSchema = (sequelize, DataTypes) => {
+  const jwtOptions = {
+    expiresIn: '1h',        // Token expiration time
+    issuer: 'easleyjs',     // Issuer
+    audience: 'users',     // Audience
+  };
   const model = sequelize.define('User', {
     username: { type: DataTypes.STRING, allowNull: false },
     password: { type: DataTypes.STRING,
@@ -13,7 +18,8 @@ const userSchema = (sequelize, DataTypes) => {
     token: {
       type: DataTypes.VIRTUAL,
       get() {
-        return jwt.sign({ username: this.username }, JWT_SECRET);
+        // token expires in 2 minutes. lasts up to 7 days.
+        return jwt.sign({ username: this.username }, JWT_SECRET, jwtOptions);
       }
     }
   });
