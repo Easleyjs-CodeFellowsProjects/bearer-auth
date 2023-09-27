@@ -25,7 +25,7 @@ async function basicAuth (req, res, next) {
     }
   } catch (e) {
     console.error(e);
-    res.status(403).send('Error Logging In')
+    res.status(403).send('Invalid Login')
   }
 
 }

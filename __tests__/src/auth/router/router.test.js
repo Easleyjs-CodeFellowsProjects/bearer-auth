@@ -22,7 +22,7 @@ afterAll(async () => {
 
 describe('Auth Router', () => {
 
-  xit('Can create a new user', async () => {
+  it('Can create a new user', async () => {
 
     const response = await mockRequest.post('/signup').send(userData.testUser);
     const userObject = response.body;
@@ -46,7 +46,7 @@ describe('Auth Router', () => {
     expect(userObject.user.username).toEqual(username);
   });
 
-  xit('Can signin with bearer auth token', async () => {
+  it('Can signin with bearer auth token', async () => {
     let { username, password } = userData.testUser;
 
     // First, use basic to login to get a token
@@ -64,7 +64,7 @@ describe('Auth Router', () => {
     expect(bearerResponse.status).toBe(200);
   });
 
-  xit('basic fails with known user and wrong password ', async () => {
+  it('basic fails with known user and wrong password ', async () => {
 
     const response = await mockRequest.post('/signin')
       .auth('admin', 'xyz')
@@ -76,7 +76,7 @@ describe('Auth Router', () => {
     expect(token).not.toBeDefined();
   });
 
-  xit('basic fails with unknown user', async () => {
+  it('basic fails with unknown user', async () => {
 
     const response = await mockRequest.post('/signin')
       .auth('nobody', 'xyz')
@@ -88,7 +88,7 @@ describe('Auth Router', () => {
     expect(token).not.toBeDefined();
   });
 
-  xit('bearer fails with an invalid token', async () => {
+  it('bearer fails with an invalid token', async () => {
 
     // First, use basic to login to get a token
     const response = await mockRequest.get('/users')
@@ -101,7 +101,7 @@ describe('Auth Router', () => {
     expect(userList.length).toBeFalsy();
   });
 
-  xit('Succeeds with a valid token', async () => {
+  it('Succeeds with a valid token', async () => {
 
     const response = await mockRequest.get('/users')
       .set('Authorization', `Bearer ${accessToken}`);
@@ -111,7 +111,7 @@ describe('Auth Router', () => {
     expect(response.body).toEqual(expect.anything());
   });
 
-  xit('Secret Route fails with invalid token', async () => {
+  it('Secret Route fails with invalid token', async () => {
     const response = await mockRequest.get('/secret')
       .set('Authorization', `bearer accessgranted`);
 
