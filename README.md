@@ -7,7 +7,7 @@ Basic API login server with Basic/Bearer functionality
 npm i express cors dotenv jest supertest sequelize pg sqlite3 base-64 jsonwebtoken
 
 ## Render.com URL:
-
+https://bearer-auth-4qxc.onrender.com/
 
 ## Assignment instructions
 
